@@ -37,7 +37,7 @@ export class BookingComponent implements OnInit {
  
     console.info(eventDetails);
     //this.generateICSFile()
-    // createGoogleEvent(eventDetails);
+    createGoogleEvent(eventDetails);
   
   let storedTimes = JSON.parse(localStorage.getItem('storedTimes') || '[]') as string[];
   console.log('storedTimes',storedTimes);
@@ -46,17 +46,6 @@ export class BookingComponent implements OnInit {
       alert("Scheduled time already exists. Please choose another time interval.");
       return;
   }else{
-    for (const attendeeEmail of attendees) {
-      const eventDetails = {
-          email: attendeeEmail,
-          startTime: startTime,
-          endTime: endTime,
-      };
-      
-      console.info(eventDetails);
-      createGoogleEvent(eventDetails);
-  }
-
   storedTimes.push(startTime);
   localStorage.setItem('storedTimes', JSON.stringify(storedTimes));
 }
