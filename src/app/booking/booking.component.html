@@ -1,5 +1,7 @@
-<div class="card">
-    <p id="title">Book Apointment</p>
+
+<div class="background">
+  <div class="card">
+    <h3 id="title">Book appointment</h3>
     <form [formGroup]="appointmentForm" (ngSubmit)="scheduleMeeting()">
       <div class="form-group">
         <label for="appointmentTime">Meeting Time </label>
@@ -19,6 +21,7 @@
         />
       </div>
       <br/>
-      <button type="submit" id="schedule-button">Schedule Appointment</button>
+      <button type="submit" id="schedule-button" class="btn">Schedule Appointment</button>
     </form>
   </div>
+</div>
