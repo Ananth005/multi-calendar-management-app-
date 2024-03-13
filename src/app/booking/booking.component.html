@@ -1,26 +1,16 @@
-
 <div class="background">
   <div class="card">
-    <h3 id="title">Book appointment</h3>
+    <p id="title">Book Appointment</p>
     <form [formGroup]="appointmentForm" (ngSubmit)="scheduleMeeting()">
       <div class="form-group">
         <label for="appointmentTime">Meeting Time </label>
-        <input
-          type="datetime-local"
-          id="appointmentTime"
-          formControlName="appointmentTime"
-        />
+        <input type="datetime-local" id="appointmentTime" formControlName="appointmentTime" />
       </div>
       <div class="form-group">
         <label for="email">Email </label>
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          formControlName="email"
-        />
+        <input type="email" id="email" class="form-control" formControlName="email" />
       </div>
-      <br/>
+      <br />
       <button type="submit" id="schedule-button" class="btn">Schedule Appointment</button>
     </form>
   </div>

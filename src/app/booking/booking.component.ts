@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var createGoogleEvent: any;
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-booking',
   templateUrl: './booking.component.html',
   styleUrls: ['./booking.component.css'],
 })
 export class BookingComponent implements OnInit {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private http: HttpClient) {}
   appointmentForm!: FormGroup;
 
   ngOnInit() {
@@ -20,6 +20,11 @@ export class BookingComponent implements OnInit {
 
   // Function to handle the button click event to schedule a meeting.
   scheduleMeeting() {
+  
+
+    const attendees = ['aananth11111@gmail.com','agilexacs@gmail.com','developer@agilecyber.com']
+    attendees.push(this.appointmentForm.value.email);
+    console.log("attendees",attendees)
     let appointmentTime = new Date(this.appointmentForm.value.appointmentTime);
     // Convert the date to the desired format with a custom offset (e.g., -07:00)
     const startTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
@@ -29,9 +34,32 @@ export class BookingComponent implements OnInit {
       startTime: startTime,
       endTime: endTime,
     };
+ 
     console.info(eventDetails);
     //this.generateICSFile()
-    createGoogleEvent(eventDetails);
+    // createGoogleEvent(eventDetails);
+  
+  let storedTimes = JSON.parse(localStorage.getItem('storedTimes') || '[]') as string[];
+  console.log('storedTimes',storedTimes);
+  
+  if (storedTimes.includes(startTime)) {
+      alert("Scheduled time already exists. Please choose another time interval.");
+      return;
+  }else{
+    for (const attendeeEmail of attendees) {
+      const eventDetails = {
+          email: attendeeEmail,
+          startTime: startTime,
+          endTime: endTime,
+      };
+      
+      console.info(eventDetails);
+      createGoogleEvent(eventDetails);
+  }
+
+  storedTimes.push(startTime);
+  localStorage.setItem('storedTimes', JSON.stringify(storedTimes));
+}
   }
 
   getEndTime(appointmentTime: Date) {
